@@ -3,7 +3,7 @@
 ##############################################################################
 
 module "cos_key_map" {
-  source        = "./config_modules/nested_list_to_map_and_merge"
+  source        = "../config_modules/nested_list_to_map_and_merge"
   list          = var.cos
   sub_list_name = "keys"
   add_parent_fields_to_child = [

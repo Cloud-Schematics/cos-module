@@ -3,7 +3,7 @@
 ##############################################################################
 
 module "cos_to_key_management" {
-  source = "./config_modules/list_to_map"
+  source = "../config_modules/list_to_map"
   list = [
     for instance in(var.key_management_service_guid == null ? [] : var.cos) :
     {

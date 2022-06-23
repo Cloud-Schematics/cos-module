@@ -3,7 +3,7 @@
 ##############################################################################
 
 module "cos_bucket_map" {
-  source        = "./config_modules/nested_list_to_map_and_merge"
+  source        = "../config_modules/nested_list_to_map_and_merge"
   list          = var.cos
   sub_list_name = "buckets"
   add_parent_fields_to_child = [
@@ -16,6 +16,18 @@ module "cos_bucket_map" {
       child_key    = "use_data"
     }
   ]
+}
+
+##############################################################################
+
+##############################################################################
+# Map Keys
+##############################################################################
+
+module "encryption_key_map" {
+  source         = "../config_modules/list_to_map"
+  list           = var.key_management_keys
+  key_name_field = "shortname"
 }
 
 ##############################################################################
@@ -36,7 +48,7 @@ resource "ibm_cos_bucket" "bucket" {
   cross_region_location = each.value.cross_region_location
   allowed_ip            = each.value.allowed_ip
   hard_quota            = each.value.hard_quota
-  key_protect           = each.value.encryption_key_id
+  key_protect           = lookup(module.encryption_key_map.value, each.value.kms_key, null)
 
   dynamic "archive_rule" {
     for_each = (

@@ -52,6 +52,20 @@ variable "service_endpoints" {
   }
 }
 
+variable "key_management_keys" {
+  description = "List of key management keys from key_management module"
+  type = list(
+    object({
+      shortname = string
+      name      = string
+      id        = string
+      crn       = string
+      key_id    = string
+    })
+  )
+  default = []
+}
+
 ##############################################################################
 
 ##############################################################################
@@ -74,7 +88,7 @@ variable "cos" {
         single_site_location  = optional(string)
         region_location       = optional(string)
         cross_region_location = optional(string)
-        encryption_key_id     = optional(string)
+        kms_key               = optional(string)
         allowed_ip            = optional(list(string))
         hard_quota            = optional(number)
         archive_rule = optional(object({

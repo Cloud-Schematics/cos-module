@@ -20,7 +20,7 @@ locals {
 ##############################################################################
 
 module "cos_data_map" {
-  source             = "./config_modules/list_to_map"
+  source             = "../config_modules/list_to_map"
   list               = var.cos
   lookup_field       = "use_data"
   lookup_value_regex = "^true$"
@@ -33,7 +33,7 @@ module "cos_data_map" {
 ##############################################################################
 
 module "cos_map" {
-  source             = "./config_modules/list_to_map"
+  source             = "../config_modules/list_to_map"
   list               = var.cos
   lookup_field       = "use_data"
   lookup_value_regex = "false|null"
