@@ -57,7 +57,7 @@ locals {
 }
 
 module "list_to_map" {
-  source         = "../list_to_map"
+  source         = "./list_to_map"
   key_name_field = local.use_parent_key ? "composed_name" : var.key_name_field
   list = flatten([
     # For each parent in the list
@@ -87,7 +87,7 @@ module "list_to_map" {
 ##############################################################################
 
 module "parent_merge_list_to_map" {
-  source         = "../list_to_map"
+  source         = "./list_to_map"
   key_name_field = local.use_parent_key ? "composed_name" : var.key_name_field
   list = flatten([
     # For each parent in the list

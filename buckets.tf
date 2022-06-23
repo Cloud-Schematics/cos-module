@@ -3,7 +3,7 @@
 ##############################################################################
 
 module "cos_bucket_map" {
-  source        = "../config_modules/nested_list_to_map_and_merge"
+  source        = "./config_modules/nested_list_to_map_and_merge"
   list          = var.cos
   sub_list_name = "buckets"
   add_parent_fields_to_child = [
@@ -25,7 +25,7 @@ module "cos_bucket_map" {
 ##############################################################################
 
 module "encryption_key_map" {
-  source         = "../config_modules/list_to_map"
+  source         = "./config_modules/list_to_map"
   list           = var.key_management_keys
   key_name_field = "shortname"
 }
