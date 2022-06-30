@@ -16,37 +16,14 @@ locals {
 ##############################################################################
 
 ##############################################################################
-# Create map of COS instance to be retrieved from data
-##############################################################################
-
-module "cos_data_map" {
-  source             = "./config_modules/list_to_map"
-  list               = var.cos
-  lookup_field       = "use_data"
-  lookup_value_regex = "^true$"
-}
-
-##############################################################################
-
-##############################################################################
-# Create map of COS instance to create
-##############################################################################
-
-module "cos_map" {
-  source             = "./config_modules/list_to_map"
-  list               = var.cos
-  lookup_field       = "use_data"
-  lookup_value_regex = "false|null"
-}
-
-##############################################################################
-
-##############################################################################
 # Get COS instance from data
 ##############################################################################
 
 data "ibm_resource_instance" "cos" {
-  for_each          = module.cos_data_map.value
+  for_each          = {
+    for instance in var.cos:
+    (instance.name) => instance if instance.use_data == true
+  }
   location          = local.cos_location
   name              = each.value.name
   resource_group_id = each.value.resource_group_id
@@ -60,7 +37,10 @@ data "ibm_resource_instance" "cos" {
 ##############################################################################
 
 resource "ibm_resource_instance" "cos" {
-  for_each          = module.cos_map.value
+  for_each          = {
+    for instance in var.cos:
+    (instance.name) => instance if instance.use_data != true
+  }
   location          = local.cos_location
   name              = "${var.prefix}-${each.value.name}${local.suffix}"
   service           = "cloud-object-storage"
