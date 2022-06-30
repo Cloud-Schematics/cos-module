@@ -48,7 +48,7 @@ resource "ibm_cos_bucket" "bucket" {
   cross_region_location = each.value.cross_region_location
   allowed_ip            = each.value.allowed_ip
   hard_quota            = each.value.hard_quota
-  key_protect           = lookup(module.encryption_key_map.value, each.value.kms_key, null) == null ? null : module.encryption_key_map.value[each.value.kms_key].crn
+  key_protect           = each.value.kms_key == null ? null : lookup(module.encryption_key_map.value, each.value.kms_key, null) == null ? null : module.encryption_key_map.value[each.value.kms_key].crn
 
   dynamic "archive_rule" {
     for_each = (
