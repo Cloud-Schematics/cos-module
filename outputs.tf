@@ -2,6 +2,11 @@
 # Outputs
 ##############################################################################
 
+output "cos_suffix" {
+  description = "Random suffix appended to the end of COS resources"
+  value       = local.suffix
+}
+
 output "cos_instances" {
   description = "List of COS resource instances with shortname, name, id, and crn."
   value = [

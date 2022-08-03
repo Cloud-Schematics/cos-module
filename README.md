@@ -93,7 +93,7 @@ variable "cos" {
 
 ## Module Outputs
 
-This module has three complex variable outputs to simplify the use of these resources as part of a larger architecture. Outputs can be found in [outputs.tf](./outputs.tf)
+This module has three complex variable outputs to simplify the use of these resources as part of a larger architecture. Outputs can be found in [outputs.tf](./outputs.tf). The random suffix used for COS resource is referenced by the output `cos_suffix`.
 
 ### COS Instances
 

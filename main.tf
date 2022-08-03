@@ -20,8 +20,8 @@ locals {
 ##############################################################################
 
 data "ibm_resource_instance" "cos" {
-  for_each          = {
-    for instance in var.cos:
+  for_each = {
+    for instance in var.cos :
     (instance.name) => instance if instance.use_data == true
   }
   location          = local.cos_location
@@ -37,8 +37,8 @@ data "ibm_resource_instance" "cos" {
 ##############################################################################
 
 resource "ibm_resource_instance" "cos" {
-  for_each          = {
-    for instance in var.cos:
+  for_each = {
+    for instance in var.cos :
     (instance.name) => instance if instance.use_data != true
   }
   location          = local.cos_location
